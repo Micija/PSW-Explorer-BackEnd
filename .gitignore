@@ -523,8 +523,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 # Migrations
-src/**/Migrations/*
-PSW.BackEnd-BackEnd/PSW.BackEnd.Infrastructure/Migrations**
+/PSW24-BackEnd/PSW24.Infrastructure/Migrations
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
