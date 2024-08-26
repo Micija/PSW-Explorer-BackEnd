@@ -34,9 +34,7 @@ namespace PSW24.Core.Domain
 
 public enum UserRole
 {
-    Bartender,
-    Waiter,
-    Manager,
-    Client,
-    ITsupport
+    Tourist,
+    Author,
+    Admin
 }

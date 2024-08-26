@@ -39,7 +39,7 @@ namespace PSW24.Infrastructure.Auth
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new("id", user.Id.ToString()),
                 new("username", user.Username),
-                new(ClaimTypes.Role, user.GetPrimaryRoleName())
+                new("role", user.GetPrimaryRoleName())
             };
 
             var jwt = CreateToken(claims, dInMinutes);

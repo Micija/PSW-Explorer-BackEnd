@@ -10,9 +10,7 @@ public class UserDto
 
 public enum UserRoleDto
 {
-    Bartender,
-    Waiter,
-    Manager,
-    Client,
-    ITsupport
+    Tourist,
+    Author,
+    Admin
 }
