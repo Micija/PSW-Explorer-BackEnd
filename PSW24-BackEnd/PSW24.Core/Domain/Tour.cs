@@ -20,11 +20,11 @@ namespace PSW24.Core.Domain
         public long AuthorId { get; private set; }
         public User Author { get; private set; }
 
-        public Tour(string name, Difficulty difficulty, Interest interest, double price, TourStatus status, long authorId)
+        public Tour(string name, Difficulty difficulty, long interestId, double price, TourStatus status, long authorId)
         {
             Name = name;
             Difficulty = difficulty;
-            Interest = interest;
+            InterestId = interestId;
             Price = price;
             Status = status;
             Validate();

@@ -42,6 +42,51 @@ namespace PSW24.Infrastructure.Migrations
                     b.ToTable("Interests", "PSW24Schema");
                 });
 
+            modelBuilder.Entity("PSW24.Core.Domain.Tour", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("InterestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("InterestId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("InterestId");
+
+                    b.HasIndex("InterestId1");
+
+                    b.ToTable("Tours", "PSW24Schema");
+                });
+
             modelBuilder.Entity("PSW24.Core.Domain.User", b =>
                 {
                     b.Property<long>("Id")
@@ -110,6 +155,31 @@ namespace PSW24.Infrastructure.Migrations
                     b.ToTable("UserInterests", "PSW24Schema");
                 });
 
+            modelBuilder.Entity("PSW24.Core.Domain.Tour", b =>
+                {
+                    b.HasOne("PSW24.Core.Domain.User", "Author")
+                        .WithMany("Tours")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PSW24.Core.Domain.Interest", null)
+                        .WithMany("Tours")
+                        .HasForeignKey("InterestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PSW24.Core.Domain.Interest", "Interest")
+                        .WithMany()
+                        .HasForeignKey("InterestId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Interest");
+                });
+
             modelBuilder.Entity("PSW24.Core.Domain.UserInterest", b =>
                 {
                     b.HasOne("PSW24.Core.Domain.Interest", null)
@@ -127,12 +197,16 @@ namespace PSW24.Infrastructure.Migrations
 
             modelBuilder.Entity("PSW24.Core.Domain.Interest", b =>
                 {
+                    b.Navigation("Tours");
+
                     b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PSW24.Core.Domain.User", b =>
                 {
                     b.Navigation("Interests");
+
+                    b.Navigation("Tours");
                 });
 #pragma warning restore 612, 618
         }
