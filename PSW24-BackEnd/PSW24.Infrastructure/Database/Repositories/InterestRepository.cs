@@ -21,5 +21,10 @@ namespace PSW24.Infrastructure.Database.Repositories
         {
             return _dbContext.Interests.ToList();
         }
+
+        public Interest GetByType(string type)
+        {
+            return _dbContext.Interests.FirstOrDefault(x => x.Type == type);
+        }
     }
 }

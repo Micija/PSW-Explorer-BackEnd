@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NpgsqlTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
 {
     public interface IUserInterestRepository
     {
+        UserInterest Create(UserInterest userInterest);
     }
 }

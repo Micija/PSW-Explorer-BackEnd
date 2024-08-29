@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Xml.Linq;
 
 namespace PSW24.Core.Services
 {
@@ -16,11 +18,15 @@ namespace PSW24.Core.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenGenerator _tokenGenerator;
+        private readonly IUserInterestRepository _userInterestRepository;
+        private readonly IInterestRepository _interestRepository;
 
-        public AuthService(IUserRepository userRepository,ITokenGenerator tokenGenerator)
+        public AuthService(IUserRepository userRepository,ITokenGenerator tokenGenerator, IUserInterestRepository userInterestRepository, IInterestRepository interestRepository)
         {
             _userRepository = userRepository;
             _tokenGenerator = tokenGenerator;
+            _userInterestRepository = userInterestRepository;
+            _interestRepository = interestRepository;   
         }
 
         public Result<AuthenticationTokensDto> Login(LoginDto credentials)
@@ -33,14 +39,20 @@ namespace PSW24.Core.Services
 
         public Result<AuthenticationTokensDto> RegisterTourist(RegisterDto account)
         {
-//          if (account.Role == UserRoleDto.Administrator) return Result.Fail(FailureCode.InvalidArgument);
             if (_userRepository.Exists(account.Username)) return Result.Fail(FailureCode.NonUniqueUsername);
-            //UserRole role = UserRole.Client; // UserRole role = account.Role == UserRoleDto.Manager? UserRole.Manager : UserRole.Client;
-
 
             try
             {
-                var user = _userRepository.Create(new User(account.Username, account.Password, (UserRole)account.Role, true));
+                var user = _userRepository.Create(new User(account.Username, account.Password, (UserRole)account.Role, true, account.Name, account.Surname, account.Email));
+
+                foreach(var i in account.Interests)
+                {
+                    Interest interest = _interestRepository.GetByType(i);
+                    if(interest == null) return Result.Fail(FailureCode.NotFound);
+                    UserInterest userInterest = new(user.Id, interest.Id);
+                    _userInterestRepository.Create(userInterest);
+                    user.Interests.Add(userInterest);
+                }
 
                 return _tokenGenerator.GenerateAccessToken(user);
             }

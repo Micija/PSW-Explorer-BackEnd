@@ -1,4 +1,5 @@
-﻿using PSW24.Core.Domain.RepositoryInterfaces;
+﻿using PSW24.Core.Domain;
+using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,13 @@ namespace PSW24.Infrastructure.Database.Repositories
         public UserInterestRepository(Context dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public UserInterest Create(UserInterest userInterest)
+        {
+            _dbContext.Add<UserInterest>(userInterest);
+            _dbContext.SaveChanges();
+            return userInterest;
         }
     }
 }

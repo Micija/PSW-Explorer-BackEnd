@@ -9,5 +9,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     public interface IInterestRepository
     {
         IEnumerable<Interest> GetAll();
+        Interest GetByType(string type);
     }
 }

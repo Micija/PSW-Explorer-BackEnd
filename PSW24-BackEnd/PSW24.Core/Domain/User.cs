@@ -13,6 +13,19 @@ namespace PSW24.Core.Domain
         public string Email { get; private set; }
         public  List<UserInterest> Interests { get; private set; }
 
+        public User(string username, string password, UserRole role, bool isActive, string name, string surname, string email) 
+        {
+            Name = name;
+            Surname = surname;
+            Email = email;
+            Password = password; 
+            Role = role;
+            IsActive = isActive;
+            Username = username;
+            Interests = new();
+            Validate();
+        }
+
         public User(string username, string password, UserRole role, bool isActive)
         {
             Username = username;
