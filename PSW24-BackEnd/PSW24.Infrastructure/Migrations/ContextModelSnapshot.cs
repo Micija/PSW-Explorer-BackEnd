@@ -63,9 +63,6 @@ namespace PSW24.Infrastructure.Migrations
                     b.Property<long>("InterestId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("InterestId1")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -81,8 +78,6 @@ namespace PSW24.Infrastructure.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("InterestId");
-
-                    b.HasIndex("InterestId1");
 
                     b.ToTable("Tours", "PSW24Schema");
                 });
@@ -163,15 +158,9 @@ namespace PSW24.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PSW24.Core.Domain.Interest", null)
+                    b.HasOne("PSW24.Core.Domain.Interest", "Interest")
                         .WithMany("Tours")
                         .HasForeignKey("InterestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PSW24.Core.Domain.Interest", "Interest")
-                        .WithMany()
-                        .HasForeignKey("InterestId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

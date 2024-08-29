@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PSW24.Infrastructure.Database.Repositories
 {
-    public class InterestRepository : CrudDatabaseRepository<Tour, Context>, IInterestRepository
+    public class InterestRepository : CrudDatabaseRepository<Interest, Context>, IInterestRepository
     {
         private readonly Context _dbContext;
 
@@ -25,6 +25,11 @@ namespace PSW24.Infrastructure.Database.Repositories
         public Interest GetByType(string type)
         {
             return _dbContext.Interests.FirstOrDefault(x => x.Type == type);
+        }
+
+        public Interest Get(long id)
+        {
+            return base.Get(id);    
         }
     }
 }

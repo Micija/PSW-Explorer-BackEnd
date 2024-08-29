@@ -17,5 +17,10 @@ namespace PSW24.Core.Domain
             Users = new();
             Tours = new();
         }
+
+        public void AddTour(Tour tour)
+        {
+            this.Tours.Add(tour);
+        }
     }
 }

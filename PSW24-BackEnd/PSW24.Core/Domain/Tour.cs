@@ -36,5 +36,15 @@ namespace PSW24.Core.Domain
             if (string.IsNullOrWhiteSpace(Name)) throw new ArgumentException("Invalid Username");
             if (Price <= 0) throw new ArgumentException("Invalid Price");
         }
+
+        public void Draft()
+        {
+            Status = TourStatus.DRAFT;
+        }
+
+        public void SetInterest(Interest interest)
+        {
+            Interest = interest;
+        }
     }
 }

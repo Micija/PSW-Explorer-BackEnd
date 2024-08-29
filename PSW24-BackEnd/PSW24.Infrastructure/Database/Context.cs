@@ -41,7 +41,7 @@ namespace PSW24.Infrastructure.Database
                 .HasForeignKey(ui => ui.InterestId);
 
             modelBuilder.Entity<Tour>()
-                 .HasOne<Interest>()
+                 .HasOne<Interest>(t => t.Interest)
                  .WithMany(i => i.Tours)
                  .HasForeignKey(t => t.InterestId);
 

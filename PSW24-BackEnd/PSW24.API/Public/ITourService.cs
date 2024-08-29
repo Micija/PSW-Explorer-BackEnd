@@ -11,5 +11,6 @@ namespace PSW24.API.Public
     public interface ITourService
     {
         Result<List<TourDto>> GetAll();
+        Result<TourDto> Create(TourDto dto);
     }
 }

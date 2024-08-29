@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PSW24.API.Controllers;
 using PSW24.API.DTOs;
 using PSW24.API.Public;
+using PSW24.Core.Services;
 
 namespace PSW24_BackEnd.Controllers
 {
@@ -20,6 +21,13 @@ namespace PSW24_BackEnd.Controllers
         public ActionResult<List<InterestDto>> GetAll()
         {
             var result = _tourService.GetAll();
+            return CreateResponse(result);
+        }
+
+        [HttpPost]
+        public ActionResult<AuthenticationTokensDto> RegisterTourist([FromBody] TourDto dto)
+        {
+            var result = _tourService.Create(dto);
             return CreateResponse(result);
         }
     }

@@ -10,5 +10,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     {
         IEnumerable<Interest> GetAll();
         Interest GetByType(string type);
+        Interest Get(long id);
     }
 }
