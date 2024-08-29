@@ -15,13 +15,16 @@ namespace PSW24.Core.Services
 {
     public class InterestService : BaseService<InterestDto, Interest>, IInterestService
     {
-        private readonly IMapper _mapper;
         protected readonly IInterestRepository _interestRepository;
 
         public InterestService(IInterestRepository interestRepository, IMapper mapper) : base(mapper)
         {
             _interestRepository = interestRepository;
-            _mapper = mapper;
+        }
+
+        public Result<List<InterestDto>> GetAll() {
+            var result = _interestRepository.GetAll().ToList();
+            return MapToDto(result);
         }
 
     }

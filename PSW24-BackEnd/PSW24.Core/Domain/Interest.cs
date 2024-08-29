@@ -9,9 +9,9 @@ namespace PSW24.Core.Domain
 {
     public class Interest : Entity
     {
-        public Interest Type { get; private set; }    
+        public string Type { get; private set; }    
         public List<UserInterest> Users { get; private set; }
-        public Interest(Interest type) { 
+        public Interest(string type) {
             Type = type;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PSW24.API.Controllers;
+using PSW24.API.DTOs;
 using PSW24.API.Public;
 
 namespace PSW24_BackEnd.Controllers
@@ -13,6 +14,13 @@ namespace PSW24_BackEnd.Controllers
         public InterestController(IInterestService interestService)
         {
             _interestService = interestService;
+        }
+
+        [HttpGet]
+        public ActionResult<List<InterestDto>> GetAll()
+        {
+            var result = _interestService.GetAll();
+            return CreateResponse(result);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using PSW24.API.DTOs;
+﻿using FluentResults;
+using PSW24.API.DTOs;
 using PSW24.BuildingBlocks.Core.UseCases;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace PSW24.API.Public
 {
     public interface IInterestService 
     {
+        Result<List<InterestDto>> GetAll();
     }
 }

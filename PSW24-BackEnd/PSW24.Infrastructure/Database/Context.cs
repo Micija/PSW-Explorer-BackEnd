@@ -11,8 +11,8 @@ namespace PSW24.Infrastructure.Database
     public class Context : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<Interest> Interests { get; set; }
+        public DbSet<UserInterest> UserInterests { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options){}
 
@@ -21,6 +21,9 @@ namespace PSW24.Infrastructure.Database
             modelBuilder.HasDefaultSchema("PSW24Schema");
 
             modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<Interest>().HasIndex(i => i.Type).IsUnique();
+
 
             Configure(modelBuilder);
         }

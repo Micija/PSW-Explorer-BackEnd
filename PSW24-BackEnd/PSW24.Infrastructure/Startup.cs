@@ -30,13 +30,22 @@ namespace PSW24.Infrastructure
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenGenerator,JwtGenerator>();
+            services.AddScoped<IInterestService, InterestService>();
+            services.AddScoped<IUserInterestService, UserInterestService>();
 
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
         {
             services.AddScoped(typeof(ICrudRepository<User>), typeof(CrudDatabaseRepository<User, Context>));
+            services.AddScoped(typeof(ICrudRepository<Interest>), typeof(CrudDatabaseRepository<Interest, Context>));
+            services.AddScoped(typeof(ICrudRepository<UserInterest>), typeof(CrudDatabaseRepository<UserInterest, Context>));
+
+
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IInterestRepository, InterestRepository>();
+            services.AddScoped<IUserInterestRepository, UserInterestRepository>();
+
 
             services.AddDbContext<Context>(opt =>
                 opt.UseNpgsql(DbConnectionStringBuilder.Build("PSW24Schema"),

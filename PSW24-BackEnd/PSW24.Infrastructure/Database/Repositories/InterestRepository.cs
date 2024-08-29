@@ -1,4 +1,5 @@
-﻿using PSW24.Core.Domain;
+﻿using PSW24.BuildingBlocks.Infrastructure.Database;
+using PSW24.Core.Domain;
 using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace PSW24.Infrastructure.Database.Repositories
 {
-    public class InterestRepository : IInterestRepository
+    public class InterestRepository : CrudDatabaseRepository<Tour, Context>, IInterestRepository
     {
         private readonly Context _dbContext;
 
-        public InterestRepository(Context dbContext)
+        public InterestRepository(Context dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
