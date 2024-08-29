@@ -12,5 +12,6 @@ namespace PSW24.API.Public
     {
         Result<List<TourDto>> GetAll();
         Result<TourDto> Create(TourDto dto);
+        Result<List<TourDto>> GetForUser(long loggedUserId);
     }
 }

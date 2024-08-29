@@ -30,5 +30,13 @@ namespace PSW24_BackEnd.Controllers
             var result = _tourService.Create(dto);
             return CreateResponse(result);
         }
+
+        [HttpGet("for-user")]
+        public ActionResult<List<InterestDto>> GetForUser()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _tourService.GetForUser(loggedUserId);
+            return CreateResponse(result);
+        }
     }
 }

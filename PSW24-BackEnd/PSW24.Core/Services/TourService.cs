@@ -6,6 +6,7 @@ using PSW24.BuildingBlocks.Core.UseCases;
 using PSW24.Core.Domain;
 using PSW24.Core.Domain.Enums;
 using PSW24.Core.Domain.RepositoryInterfaces;
+using System.Linq;
 
 namespace PSW24.Core.Services
 {
@@ -44,7 +45,21 @@ namespace PSW24.Core.Services
             return MapToDto(result);
         }
 
-           
+        private bool InInterest(List<Domain.UserInterest> interests, long interestId)
+        {
+            return interests.Any(i => i.InterestId == interestId);
+        }
+        public Result<List<TourDto>> GetForUser(long loggedUserId)
+        {
+            User user = _userRepository.GetById(loggedUserId);
+            List<Tour> suitableTours = new();
 
+            foreach(var tour in _tourRepository.GetAll().ToList())
+            {
+                if(InInterest(user.Interests, tour.InterestId)) suitableTours.Add(tour);
+            }
+
+            return MapToDto(suitableTours);
+        }
     }
 }
