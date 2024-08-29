@@ -8,6 +8,10 @@ namespace PSW24.Core.Domain
         public string Password { get; private set; }
         public UserRole Role { get; private set; }
         public bool IsActive { get; set; }
+        public string Name {  get; private set; }
+        public string Surname { get; private set; }
+        public string Email { get; private set; }
+        public  List<UserInterest> Interests { get; private set; }
 
         public User(string username, string password, UserRole role, bool isActive)
         {

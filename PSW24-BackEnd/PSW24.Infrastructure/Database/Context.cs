@@ -11,6 +11,8 @@ namespace PSW24.Infrastructure.Database
     public class Context : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<UserInterest> UserInterests { get; set; }
+        public DbSet<Interest> Interests { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options){}
 
@@ -25,7 +27,15 @@ namespace PSW24.Infrastructure.Database
 
         private static void Configure(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserInterest>()
+                .HasOne<User>()
+                .WithMany(u => u.Interests)
+                .HasForeignKey(ui => ui.UserId);
 
+            modelBuilder.Entity<UserInterest>()
+                .HasOne<Interest>()
+                .WithMany(i => i.Users)
+                .HasForeignKey(ui => ui.InterestId);
         }
     }
 }
