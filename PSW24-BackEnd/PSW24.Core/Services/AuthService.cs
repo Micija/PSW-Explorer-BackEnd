@@ -51,7 +51,7 @@ namespace PSW24.Core.Services
                     if(interest == null) return Result.Fail(FailureCode.NotFound);
                     UserInterest userInterest = new(user.Id, interest.Id);
                     _userInterestRepository.Create(userInterest);
-                    user.Interests.Add(userInterest);
+                    user.AddInterest(userInterest);
                 }
 
                 return _tokenGenerator.GenerateAccessToken(user);

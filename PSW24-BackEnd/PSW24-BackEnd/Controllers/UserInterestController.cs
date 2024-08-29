@@ -6,7 +6,7 @@ using PSW24.Core.Domain;
 
 namespace PSW24_BackEnd.Controllers
 {
-    [Route("api/users")]
+    [Route("api/user-interest")]
     public class UserInterestController : BaseApiController
     {
         private readonly IUserInterestService _userInterestService;

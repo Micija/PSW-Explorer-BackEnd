@@ -12,6 +12,7 @@ namespace PSW24.Core.Domain
         public string Surname { get; private set; }
         public string Email { get; private set; }
         public  List<UserInterest> Interests { get; private set; }
+        public List<Tour> Tours { get; private set; }
 
         public User(string username, string password, UserRole role, bool isActive, string name, string surname, string email) 
         {
@@ -23,6 +24,7 @@ namespace PSW24.Core.Domain
             IsActive = isActive;
             Username = username;
             Interests = new();
+            Tours = new();
             Validate();
         }
 
@@ -44,6 +46,11 @@ namespace PSW24.Core.Domain
         public string GetPrimaryRoleName()
         {
             return Role.ToString().ToLower();
+        }
+
+        public void AddInterest(UserInterest userInterest)
+        {
+            Interests.Add(userInterest);
         }
 
     }

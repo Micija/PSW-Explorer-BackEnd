@@ -11,7 +11,9 @@ namespace PSW24.Core.Domain
     public class Tour : Entity
     {
         public string Name { get; private set; }
+        public string Description { get; private set; }
         public Difficulty Difficulty { get; private set; }
+        public long InterestId { get; private set;}
         public Interest Interest { get; private set; }
         public double Price { get; private set; }
         public TourStatus Status { get; private set; }

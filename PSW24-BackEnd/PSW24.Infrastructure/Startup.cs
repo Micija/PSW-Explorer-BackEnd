@@ -32,6 +32,7 @@ namespace PSW24.Infrastructure
             services.AddScoped<ITokenGenerator,JwtGenerator>();
             services.AddScoped<IInterestService, InterestService>();
             services.AddScoped<IUserInterestService, UserInterestService>();
+            services.AddScoped<ITourService, TourService>();
 
         }
 
@@ -40,11 +41,12 @@ namespace PSW24.Infrastructure
             services.AddScoped(typeof(ICrudRepository<User>), typeof(CrudDatabaseRepository<User, Context>));
             services.AddScoped(typeof(ICrudRepository<Interest>), typeof(CrudDatabaseRepository<Interest, Context>));
             services.AddScoped(typeof(ICrudRepository<UserInterest>), typeof(CrudDatabaseRepository<UserInterest, Context>));
-
+            services.AddScoped(typeof(ICrudRepository<Tour>), typeof(CrudDatabaseRepository<Tour, Context>));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IInterestRepository, InterestRepository>();
             services.AddScoped<IUserInterestRepository, UserInterestRepository>();
+            services.AddScoped<ITourRepository, TourRepository>();
 
 
             services.AddDbContext<Context>(opt =>

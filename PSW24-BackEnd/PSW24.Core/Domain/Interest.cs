@@ -11,8 +11,11 @@ namespace PSW24.Core.Domain
     {
         public string Type { get; private set; }    
         public List<UserInterest> Users { get; private set; }
+        public List<Tour> Tours { get; private set; }
         public Interest(string type) {
             Type = type;
+            Users = new();
+            Tours = new();
         }
     }
 }
