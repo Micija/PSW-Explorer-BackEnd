@@ -13,7 +13,7 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public User GetById(long id)
         {
-            User user = _dbContext.Users.FirstOrDefault(user => user.Id == id);
+            User user = _dbContext.Users.Include(u => u.Interests).FirstOrDefault(user => user.Id == id);
             if (user == null) throw new KeyNotFoundException("Not found.");
             return user;
         }
