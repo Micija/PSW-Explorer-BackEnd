@@ -13,6 +13,7 @@ namespace PSW24.Core.Domain
         public string Email { get; private set; }
         public  List<UserInterest> Interests { get; private set; }
         public List<Tour> Tours { get; private set; }       //Za koje je autor
+        public ICollection<Cart> Carts { get; } = [];
 
         public User(string username, string password, UserRole role, bool isActive, string name, string surname, string email) 
         {

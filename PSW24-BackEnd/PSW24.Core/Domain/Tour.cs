@@ -19,7 +19,7 @@ namespace PSW24.Core.Domain
         public TourStatus Status { get; private set; }
         public long AuthorId { get; private set; }
         public User Author { get; private set; }
-        public ICollection<KeyPoint> KeyPoints { get; } = [];   
+        public ICollection<KeyPoint> KeyPoints { get; } = [];
         public Tour(string name, Difficulty difficulty, long interestId, double price, TourStatus status, long authorId)
         {
             Name = name;

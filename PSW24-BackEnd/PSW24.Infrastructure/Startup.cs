@@ -34,6 +34,7 @@ namespace PSW24.Infrastructure
             services.AddScoped<IUserInterestService, UserInterestService>();
             services.AddScoped<ITourService, TourService>();
             services.AddScoped<IKeyPointService, KeyPointService>();
+            services.AddScoped<ICartService, CartService>();
 
 
         }
@@ -45,6 +46,7 @@ namespace PSW24.Infrastructure
             services.AddScoped(typeof(ICrudRepository<UserInterest>), typeof(CrudDatabaseRepository<UserInterest, Context>));
             services.AddScoped(typeof(ICrudRepository<Tour>), typeof(CrudDatabaseRepository<Tour, Context>));
             services.AddScoped(typeof(ICrudRepository<KeyPoint>), typeof(CrudDatabaseRepository<KeyPoint, Context>));
+            services.AddScoped(typeof(ICrudRepository<Cart>), typeof(CrudDatabaseRepository<Cart, Context>));
 
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -52,6 +54,7 @@ namespace PSW24.Infrastructure
             services.AddScoped<IUserInterestRepository, UserInterestRepository>();
             services.AddScoped<ITourRepository, TourRepository>();
             services.AddScoped<IKeyPointRepository, KeyPointRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
 
 
             services.AddDbContext<Context>(opt =>
