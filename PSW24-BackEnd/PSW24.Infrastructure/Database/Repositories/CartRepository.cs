@@ -29,5 +29,24 @@ namespace PSW24.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return cart;
         }
+
+        public Cart Delete(Cart cart)
+        {
+            _dbContext.Carts.Remove(cart);
+            _dbContext.SaveChanges();
+            return cart;
+        }
+
+        public Cart Get(long cartId)
+        {
+            return _dbContext.Carts.FirstOrDefault(c => c.Id == cartId);
+        }
+
+        public List<long> GetCartCustomer(User customer)
+        {
+            return _dbContext.Carts.Where(c => c.BuyerId == customer.Id).Select(c => c.TourId).ToList();
+        }
+
+
     }
 }

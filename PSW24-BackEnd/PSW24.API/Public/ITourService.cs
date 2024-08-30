@@ -17,6 +17,7 @@ namespace PSW24.API.Public
         Result<List<TourDto>> GetPublish();
         Result<List<TourDto>> GetAuthor(long authorId);
         Result<TourDto> Archive(long tourId);
+        Result<List<TourDto>> GetCartTour(long customerId);
 
     }
 }

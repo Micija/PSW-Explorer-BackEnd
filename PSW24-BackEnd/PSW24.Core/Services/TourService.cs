@@ -15,12 +15,14 @@ namespace PSW24.Core.Services
         protected readonly ITourRepository _tourRepository;
         protected readonly IInterestRepository _interestRepository;
         protected readonly IUserRepository _userRepository;
+        protected readonly ICartRepository _cartRepository;
 
-        public TourService(ITourRepository tourRepository, IInterestRepository interestRepository, IUserRepository userRepository, IMapper mapper) : base(mapper)
+        public TourService(ITourRepository tourRepository, IInterestRepository interestRepository, IUserRepository userRepository, ICartRepository cartRepository , IMapper mapper) : base(mapper)
         {
             _tourRepository = tourRepository;
             _interestRepository = interestRepository;
             _userRepository = userRepository;
+            _cartRepository = cartRepository;
         }
 
         public Result<TourDto> Create(TourDto dto)
@@ -99,6 +101,27 @@ namespace PSW24.Core.Services
                 tour.Archive();
                 _tourRepository.Save();
                 return MapToDto(tour);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<TourDto>> GetCartTour(long customerId)
+        {
+            User user = _userRepository.GetById(customerId);
+            if (user == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                List<Tour> suitableTours = new();
+
+                foreach (var tourId in _cartRepository.GetCartCustomer(user))
+                {
+                    suitableTours.Add(_tourRepository.Get(tourId));
+                }
+
+                return MapToDto(suitableTours);
             }
             catch (Exception ex)
             {

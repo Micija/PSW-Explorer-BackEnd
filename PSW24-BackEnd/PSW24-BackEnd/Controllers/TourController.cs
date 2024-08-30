@@ -69,5 +69,13 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
+
+        [HttpGet("in-cart")]
+        public ActionResult<List<TourDto>> GetCartTour()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _tourService.GetCartTour(loggedUserId);
+            return CreateResponse(result);
+        }
     }
 }
