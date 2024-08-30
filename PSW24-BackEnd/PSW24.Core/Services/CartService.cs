@@ -68,6 +68,7 @@ namespace PSW24.Core.Services
                 foreach(var cart in _cartRepository.GetCustomer(user))
                 {
                     cart.Buy();
+                    cart.Now();
                     boughts += cart.Tour.Name + ",";
                     _cartRepository.Save();
                 }

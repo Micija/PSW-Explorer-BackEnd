@@ -6,6 +6,7 @@ public class UserDto
     public string Username { get; set; }
     public UserRoleDto Role { get; set; }
     public bool IsActive { get; set; }
+    public long? Points { get; set; }
 }
 
 public enum UserRoleDto

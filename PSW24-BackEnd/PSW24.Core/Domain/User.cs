@@ -11,6 +11,7 @@ namespace PSW24.Core.Domain
         public string Name {  get; private set; }
         public string Surname { get; private set; }
         public string Email { get; private set; }
+        public long? Points { get; private set; }
         public  List<UserInterest> Interests { get; private set; }
         public List<Tour> Tours { get; private set; }       //Za koje je autor
         public ICollection<Cart> Carts { get; } = [];
