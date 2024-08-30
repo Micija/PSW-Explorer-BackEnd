@@ -22,3 +22,11 @@ VALUES ('author', 'author', 1, true,'Jane', 'Smith', 'jane.smith@example.com');
 INSERT INTO "PSW24Schema"."Users" ("Username", "Password", "Role", "IsActive", "Name", "Surname", "Email")
 VALUES ('admin', 'admin',2,true, 'Admin', 'User', 'admin.user@example.com');
 
+INSERT INTO "PSW24Schema"."UserInterests"(
+	"UserId", "InterestId")
+	VALUES (1, 1);
+	
+	
+	INSERT INTO "PSW24Schema"."UserInterests"(
+	"UserId", "InterestId")
+	VALUES (1, 2);
