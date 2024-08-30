@@ -1,4 +1,5 @@
-﻿using PSW24.BuildingBlocks.Infrastructure.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using PSW24.BuildingBlocks.Infrastructure.Database;
 using PSW24.Core.Domain;
 using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
@@ -26,7 +27,18 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public List<Tour> GetAll()
         {
-            return _dbContext.Tours.ToList();
+            return _dbContext.Tours.Include(t => t.KeyPoints).ToList();
+        }
+
+        
+        public Tour Get(long id)
+        {
+            return _dbContext.Tours.Include(t => t.KeyPoints).FirstOrDefault(t => t.Id == id);
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
         }
 
     }

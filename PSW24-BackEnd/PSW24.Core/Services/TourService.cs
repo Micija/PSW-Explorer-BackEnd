@@ -16,7 +16,7 @@ namespace PSW24.Core.Services
         protected readonly IInterestRepository _interestRepository;
         protected readonly IUserRepository _userRepository;
 
-        public TourService(ITourRepository tourRepository, IInterestRepository interestRepository, IUserRepository userRepository ,IMapper mapper) : base(mapper)
+        public TourService(ITourRepository tourRepository, IInterestRepository interestRepository, IUserRepository userRepository, IMapper mapper) : base(mapper)
         {
             _tourRepository = tourRepository;
             _interestRepository = interestRepository;
@@ -54,12 +54,56 @@ namespace PSW24.Core.Services
             User user = _userRepository.GetById(loggedUserId);
             List<Tour> suitableTours = new();
 
-            foreach(var tour in _tourRepository.GetAll().ToList())
+            foreach (var tour in _tourRepository.GetAll().ToList())
             {
-                if(InInterest(user.Interests, tour.InterestId)) suitableTours.Add(tour);
+                if (InInterest(user.Interests, tour.InterestId)) suitableTours.Add(tour);
             }
 
             return MapToDto(suitableTours);
+        }
+
+        public Result<TourDto> Publish(long tourId)
+        {
+            Tour tour = _tourRepository.Get(tourId);
+            if (tour == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                tour.Publish();
+                _tourRepository.Save();
+                return MapToDto(tour);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<TourDto>> GetPublish()
+        {
+            var result = _tourRepository.GetAll().FindAll(t => t.Status == TourStatus.PUBLISHED).ToList();
+            return MapToDto(result);
+        }
+
+        public Result<List<TourDto>> GetAuthor(long authorId)
+        {
+            var result = _tourRepository.GetAll().FindAll(t => t.AuthorId == authorId).ToList();
+            return MapToDto(result);
+        }
+
+        public Result<TourDto> Archive(long tourId)
+        {
+            Tour tour = _tourRepository.Get(tourId);
+            if (tour == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                tour.Archive();
+                _tourRepository.Save();
+                return MapToDto(tour);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
         }
     }
 }

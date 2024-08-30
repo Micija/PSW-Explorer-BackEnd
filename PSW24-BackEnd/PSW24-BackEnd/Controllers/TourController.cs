@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PSW24.API.Controllers;
 using PSW24.API.DTOs;
@@ -32,11 +33,41 @@ namespace PSW24_BackEnd.Controllers
         }
 
         [HttpGet("for-user")]
-        public ActionResult<List<InterestDto>> GetForUser()
+        public ActionResult<List<TourDto>> GetForUser()
         {
             var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
             var result = _tourService.GetForUser(loggedUserId);
             return CreateResponse(result);
         }
+
+        [HttpPatch("set-publish/{tourId}")]
+        public ActionResult<TourDto> Publish(long tourId)
+        {
+            var result = _tourService.Publish(tourId);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("get-publish")]
+        public ActionResult<List<InterestDto>> GetPublish()
+        {
+            var result = _tourService.GetAll();
+            return CreateResponse(result);
+        }
+
+        [HttpGet("get-author")]
+        public ActionResult<List<TourDto>> GetAuthor()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _tourService.GetAuthor(loggedUserId);
+            return CreateResponse(result);
+        }
+
+        [HttpPatch("set-archive/{tourId}")]
+        public ActionResult<TourDto> Archive(long tourId)
+        {
+            var result = _tourService.Archive(tourId);
+            return CreateResponse(result);
+        }
+
     }
 }
