@@ -14,6 +14,8 @@ namespace PSW24.Infrastructure.Database
         public DbSet<Interest> Interests { get; set; }
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<Tour> Tours { get; set; }
+        public DbSet<KeyPoint> KeyPoints{ get; set; }
+
         public Context(DbContextOptions<Context> options) : base(options){}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,6 +52,10 @@ namespace PSW24.Infrastructure.Database
                  .WithMany(u => u.Tours)
                  .HasForeignKey(t => t.AuthorId);
 
+            modelBuilder.Entity<KeyPoint>()
+                 .HasOne<Tour>(k => k.Tour)
+                 .WithMany(t => t.KeyPoints)
+                 .HasForeignKey(k => k.TourId);
         }
     }
 }

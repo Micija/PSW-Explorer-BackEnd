@@ -19,7 +19,7 @@ namespace PSW24.Core.Domain
         public TourStatus Status { get; private set; }
         public long AuthorId { get; private set; }
         public User Author { get; private set; }
-
+        public List<KeyPoint> KeyPoints { get; private set; }   
         public Tour(string name, Difficulty difficulty, long interestId, double price, TourStatus status, long authorId)
         {
             Name = name;
@@ -29,6 +29,7 @@ namespace PSW24.Core.Domain
             Status = status;
             Validate();
             AuthorId = authorId;
+            KeyPoints = new();
         }
 
         private void Validate()

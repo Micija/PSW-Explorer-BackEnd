@@ -42,6 +42,41 @@ namespace PSW24.Infrastructure.Migrations
                     b.ToTable("Interests", "PSW24Schema");
                 });
 
+            modelBuilder.Entity("PSW24.Core.Domain.KeyPoint", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("TourId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("KeyPoints", "PSW24Schema");
+                });
+
             modelBuilder.Entity("PSW24.Core.Domain.Tour", b =>
                 {
                     b.Property<long>("Id")
@@ -150,6 +185,17 @@ namespace PSW24.Infrastructure.Migrations
                     b.ToTable("UserInterests", "PSW24Schema");
                 });
 
+            modelBuilder.Entity("PSW24.Core.Domain.KeyPoint", b =>
+                {
+                    b.HasOne("PSW24.Core.Domain.Tour", "Tour")
+                        .WithMany("KeyPoints")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tour");
+                });
+
             modelBuilder.Entity("PSW24.Core.Domain.Tour", b =>
                 {
                     b.HasOne("PSW24.Core.Domain.User", "Author")
@@ -189,6 +235,11 @@ namespace PSW24.Infrastructure.Migrations
                     b.Navigation("Tours");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("PSW24.Core.Domain.Tour", b =>
+                {
+                    b.Navigation("KeyPoints");
                 });
 
             modelBuilder.Entity("PSW24.Core.Domain.User", b =>

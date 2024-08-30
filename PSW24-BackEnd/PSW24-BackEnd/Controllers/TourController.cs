@@ -25,7 +25,7 @@ namespace PSW24_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AuthenticationTokensDto> RegisterTourist([FromBody] TourDto dto)
+        public ActionResult<TourDto> RegisterTourist([FromBody] TourDto dto)
         {
             var result = _tourService.Create(dto);
             return CreateResponse(result);
