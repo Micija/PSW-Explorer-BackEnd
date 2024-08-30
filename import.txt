@@ -1,24 +1,23 @@
 INSERT INTO "PSW24Schema"."Interests"("Type")
-	VALUES ('NATURAL');
+	VALUES ('Nature');
 	
 INSERT INTO "PSW24Schema"."Interests"("Type")
-	VALUES ('ART');
+	VALUES ('Art');
 	
 INSERT INTO "PSW24Schema"."Interests"("Type")
-	VALUES ('SPORT');
+	VALUES ('Sport');
 	
 INSERT INTO "PSW24Schema"."Interests"("Type")
-	VALUES ('SHOPPING');
+	VALUES ('Shopping');
 	
 INSERT INTO "PSW24Schema"."Interests"("Type")
-	VALUES ('FOOD');
+	VALUES ('Food');
 
 INSERT INTO "PSW24Schema"."Users" ("Username", "Password", "Role", "IsActive", "Name", "Surname", "Email")
 VALUES ('user', 'user',0, true, 'John', 'Doe', 'john.doe@example.com');
 
 INSERT INTO "PSW24Schema"."Users" ("Username", "Password", "Role", "IsActive", "Name", "Surname", "Email")
-VALUES ('author', 'author', 2, true,'Jane', 'Smith', 'jane.smith@example.com');
-
+VALUES ('author', 'author', 1, true,'Jane', 'Smith', 'jane.smith@example.com');
 
 INSERT INTO "PSW24Schema"."Users" ("Username", "Password", "Role", "IsActive", "Name", "Surname", "Email")
 VALUES ('admin', 'admin',2,true, 'Admin', 'User', 'admin.user@example.com');
