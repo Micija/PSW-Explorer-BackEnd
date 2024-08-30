@@ -8,8 +8,11 @@ using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace PSW24.Core.Services
 {
@@ -54,9 +57,59 @@ namespace PSW24.Core.Services
                 return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
             }
         }
-        
+
+        public Result<bool> Buy(long customerId)
+        {
+            User user = _userRepository.GetById(customerId);
+            if (user == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                string boughts = "";
+                foreach(var cart in _cartRepository.GetCustomer(user))
+                {
+                    cart.Buy();
+                    boughts += cart.Tour.Name + ",";
+                    _cartRepository.Save();
+                }
 
 
+                SmtpClient client = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("markoandjelicpsw@gmail.com", "yasg svva qiep ddfo"),
+                    EnableSsl = true,
+                };
+
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress("markoandjelicpsw@gmail.com"),
+                    To = { user.Email },
+                    Subject = "Kupljene ture",
+                    Body = "Hvala na kupovini: " + boughts,
+                    IsBodyHtml = true
+                };
+
+                try
+                {
+                    client.Send(mailMessage);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Failed to send email: {ex.Message}");
+                }
+                finally
+                {
+                    mailMessage.Dispose();
+                    client.Dispose();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
 
     }
 

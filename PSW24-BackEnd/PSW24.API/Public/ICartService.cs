@@ -12,5 +12,6 @@ namespace PSW24.API.Public
     {
         Result<CartDto> Create(CartDto dto);
         Result<CartDto> Delete(long cartId);
+        Result<bool> Buy(long customerId);
     }
 }

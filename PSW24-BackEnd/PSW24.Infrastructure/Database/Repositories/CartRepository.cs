@@ -1,4 +1,5 @@
-﻿using PSW24.Core.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using PSW24.Core.Domain;
 using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -44,9 +45,17 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public List<long> GetCartCustomer(User customer)
         {
-            return _dbContext.Carts.Where(c => c.BuyerId == customer.Id).Select(c => c.TourId).ToList();
+            return _dbContext.Carts.Where(c => c.BuyerId == customer.Id && !c.Bought).Select(c => c.TourId).ToList();
         }
 
+        public List<Cart> GetCustomer(User customer)
+        {
+            return _dbContext.Carts.Include(c => c.Tour).Where(c => c.BuyerId == customer.Id).ToList();
+        }
 
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }

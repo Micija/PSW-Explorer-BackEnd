@@ -31,6 +31,11 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
-
+        [HttpPatch("{customerId}")]
+        public ActionResult<CartDto> Buy(long customerId)
+        {
+            var result = _cartService.Buy(customerId);
+            return CreateResponse(result);
+        }
     }
 }

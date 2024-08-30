@@ -10,6 +10,6 @@ namespace PSW24.API.DTOs
     {
         public long TourId { get;  set; }
         public long BuyerId { get;  set; }
-
+        public bool Bought { get; set; }    
     }
 }

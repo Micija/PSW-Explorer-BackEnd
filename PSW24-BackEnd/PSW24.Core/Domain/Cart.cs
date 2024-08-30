@@ -13,11 +13,17 @@ namespace PSW24.Core.Domain
         public Tour Tour { get; private set; }
         public long BuyerId { get; private set; }
         public User Buyer { get; private set; }
+        public bool Bought { get; private set; }
 
-        public Cart(long tourId, long buyerId)
+        public Cart(long tourId, long buyerId, bool bought)
         {
             BuyerId = buyerId;
-            TourId = tourId;
+            TourId = tourId;            Bought = bought;
+        }
+
+        public void Buy()
+        {
+            Bought = true;
         }
     }
 }
