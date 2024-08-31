@@ -26,7 +26,7 @@ namespace PSW24.Core.Domain
         }
         public void Now()
         {
-            Date = DateTime.Now;
+            Date = DateTime.UtcNow;
         }
     }
 }
