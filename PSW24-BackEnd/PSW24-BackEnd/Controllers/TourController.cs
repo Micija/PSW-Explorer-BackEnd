@@ -89,5 +89,14 @@ namespace PSW24_BackEnd.Controllers
             }
             return Ok(tourDto); // Return 200 with the tour DTO if found
         }
+
+
+        [HttpGet("recommendations/{difficulty}")]
+        public ActionResult<TourDto> GetRecommendations(string difficulty)
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var tourDto = _tourService.GetRecommendations(loggedUserId, difficulty);
+            return CreateResponse(tourDto); 
+        }
     }
 }

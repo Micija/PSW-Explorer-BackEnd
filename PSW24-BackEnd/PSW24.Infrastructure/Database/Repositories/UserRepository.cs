@@ -44,5 +44,10 @@ namespace PSW24.Infrastructure.Database.Repositories
         {
             _dbContext.SaveChanges();
         }
+
+        public List<User> GetAllTouristByInterest(long interestId)
+        {
+            return _dbContext.Users.Include(u => u.Interests).Where(u => u.Interests.FirstOrDefault(i => i.InterestId == interestId) == null ? false : true).ToList();
+        }
     }
 }

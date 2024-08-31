@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Quartz.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
         User Create(User user);
         List<User> GetAllAuthor();
         void Save();
+        List<User> GetAllTouristByInterest(long interestId);
     }
 }
