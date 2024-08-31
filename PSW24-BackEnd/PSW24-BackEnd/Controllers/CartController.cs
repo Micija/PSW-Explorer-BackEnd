@@ -24,10 +24,11 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
-        [HttpDelete("{cartId}")]
-        public ActionResult<CartDto> Delete(long cartId)
+        [HttpDelete("{tourId}")]
+        public ActionResult<CartDto> Delete(long tourId)
         {
-            var result = _cartService.Delete(cartId);
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _cartService.Delete(loggedUserId, tourId);
             return CreateResponse(result);
         }
 

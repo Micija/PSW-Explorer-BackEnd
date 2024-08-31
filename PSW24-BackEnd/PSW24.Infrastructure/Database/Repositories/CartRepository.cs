@@ -57,5 +57,10 @@ namespace PSW24.Infrastructure.Database.Repositories
         {
             _dbContext.SaveChanges();
         }
+
+        public Cart GetByTourUser(long userId, long tourId)
+        {
+            return _dbContext.Carts.FirstOrDefault(c => c.BuyerId == userId && c.TourId == tourId);
+        }
     }
 }

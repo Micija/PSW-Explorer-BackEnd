@@ -1,4 +1,6 @@
-﻿using PSW24.Infrastructure;
+﻿using PSW24.Core.Services;
+using PSW24.Infrastructure;
+using Quartz;
 
 namespace PSW24_BackEnd
 {
@@ -9,8 +11,26 @@ namespace PSW24_BackEnd
             services.ConfigureModule();
 
 
+            services.AddQuartz(options =>
+            {
+                options.UseMicrosoftDependencyInjectionJobFactory();
+
+                var jobKey = JobKey.Create(nameof(ReportService));
+                options
+                    .AddJob<ReportService>(jobKey)
+                    .AddTrigger(trigger => trigger
+                                            .ForJob(jobKey)
+                                            .WithSimpleSchedule(s => s.WithIntervalInSeconds(5).RepeatForever()));
+            });
+
+            services.AddQuartzHostedService(opitions =>
+            {
+                opitions.WaitForJobsToComplete = true;
+            });
+
             return services;
         }
+
 
     }
 }

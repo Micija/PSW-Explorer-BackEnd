@@ -11,7 +11,7 @@ namespace PSW24.API.Public
     public interface ICartService
     {
         Result<CartDto> Create(CartDto dto);
-        Result<CartDto> Delete(long cartId);
+        Result<CartDto> Delete(long customerId, long cartId);
         Result<bool> Buy(long customerId);
     }
 }

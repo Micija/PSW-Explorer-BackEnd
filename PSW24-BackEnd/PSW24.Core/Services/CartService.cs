@@ -34,6 +34,9 @@ namespace PSW24.Core.Services
             Cart cart = MapToDomain(dto);
             try
             {
+                Cart existCart = _cartRepository.GetByTourUser(dto.BuyerId, dto.TourId);
+                if(existCart != null && !existCart.Bought) return Result.Fail(FailureCode.InvalidArgument);
+
                 _cartRepository.Create(cart);
                 return MapToDto(cart);
             }
@@ -43,9 +46,9 @@ namespace PSW24.Core.Services
             }
         }
 
-        public Result<CartDto> Delete(long cartId)
+        public Result<CartDto> Delete(long customerId, long cartId)
         {
-            Cart cart = _cartRepository.Get(cartId);
+            Cart cart = _cartRepository.GetByTourUser(customerId, cartId);
             if(cart  == null) return Result.Fail(FailureCode.NotFound);
             try
             {

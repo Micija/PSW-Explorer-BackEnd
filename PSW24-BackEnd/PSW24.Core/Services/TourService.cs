@@ -122,6 +122,7 @@ namespace PSW24.Core.Services
                 }
 
                 return MapToDto(suitableTours);
+
             }
             catch (Exception ex)
             {
