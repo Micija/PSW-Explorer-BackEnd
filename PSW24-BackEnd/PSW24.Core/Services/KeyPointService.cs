@@ -36,5 +36,30 @@ namespace PSW24.Core.Services
                 return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
             }
         }
+
+        public Result<List<KeyPointDto>> GetAllForTour(long tourId)
+        {
+            try
+            {
+                var keyPoints = _keyPointRepository.GetAll().FindAll(k => k.TourId == tourId);
+                var keyPointDtos = keyPoints.Select(k => new KeyPointDto
+                {
+                    Id = k.Id,
+                    Description = k.Description,
+                    Latitude = k.Latitude,
+                    Longitude = k.Longitude,
+                    Image = k.Image,
+                    Name = k.Name,
+                    TourId = k.TourId,
+
+                }).ToList();
+
+                return Result.Ok(keyPointDtos);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<List<KeyPointDto>>("Failed to retrieve menus").WithError(e.Message);
+            }
+        }
     }
 }

@@ -128,5 +128,18 @@ namespace PSW24.Core.Services
                 return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
             }
         }
+
+        public TourDto GetTourById(long id)
+        {
+            var tour = _tourRepository.Get(id);
+
+            if (tour == null)
+            {
+                return null; // Or handle appropriately if null
+            }
+
+            return MapToDto(tour);
+        }
+
     }
 }

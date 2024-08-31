@@ -9,5 +9,7 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     public interface IKeyPointRepository
     {
         KeyPoint Create(KeyPoint keyPoint);
+        List<KeyPoint> GetAllForTour(long tourId);
+        List<KeyPoint> GetAll();
     }
 }

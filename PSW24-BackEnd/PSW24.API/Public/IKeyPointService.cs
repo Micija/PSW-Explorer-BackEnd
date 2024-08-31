@@ -11,5 +11,6 @@ namespace PSW24.API.Public
     public interface IKeyPointService
     {
         Result<KeyPointDto> Create(KeyPointDto dto);
+        Result<List<KeyPointDto>> GetAllForTour(long tourId);
     }
 }
