@@ -50,7 +50,7 @@ namespace PSW24_BackEnd.Controllers
         [HttpGet("get-publish")]
         public ActionResult<List<InterestDto>> GetPublish()
         {
-            var result = _tourService.GetAll();
+            var result = _tourService.GetPublish();
             return CreateResponse(result);
         }
 
@@ -76,6 +76,18 @@ namespace PSW24_BackEnd.Controllers
             var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
             var result = _tourService.GetCartTour(loggedUserId);
             return CreateResponse(result);
+        }
+
+
+        [HttpGet("{id}")]
+        public ActionResult<TourDto> GetTourById(long id)
+        {
+            var tourDto = _tourService.GetTourById(id);
+            if (tourDto == null)
+            {
+                return NotFound(); // Return 404 if the tour is not found
+            }
+            return Ok(tourDto); // Return 200 with the tour DTO if found
         }
     }
 }

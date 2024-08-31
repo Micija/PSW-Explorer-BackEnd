@@ -22,5 +22,15 @@ namespace PSW24.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return keyPoint;
         }
+
+        public List<KeyPoint> GetAll()
+        {
+            return _dbContext.KeyPoints.ToList();
+        }
+
+        public List<KeyPoint> GetAllForTour(long tourId)
+        {
+            return _dbContext.KeyPoints.Where(kp => kp.TourId == tourId).ToList();
+        }
     }
 }

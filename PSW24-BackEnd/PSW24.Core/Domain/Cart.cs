@@ -18,8 +18,7 @@ namespace PSW24.Core.Domain
         public Cart(long tourId, long buyerId, bool bought)
         {
             BuyerId = buyerId;
-            TourId = tourId;
-            Bought = bought;
+            TourId = tourId;            Bought = bought;
         }
         public void Buy()
         {
@@ -27,7 +26,7 @@ namespace PSW24.Core.Domain
         }
         public void Now()
         {
-            Date = DateTime.Now;
+            Date = DateTime.UtcNow;
         }
     }
 }
