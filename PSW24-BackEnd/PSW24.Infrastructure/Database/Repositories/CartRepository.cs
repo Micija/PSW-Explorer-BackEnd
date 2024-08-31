@@ -60,7 +60,7 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public Cart GetByTourUser(long userId, long tourId)
         {
-            return _dbContext.Carts.FirstOrDefault(c => c.BuyerId == userId && c.TourId == tourId);
+            return _dbContext.Carts.FirstOrDefault(c => c.Bought == false &&  c.BuyerId == userId && c.TourId == tourId);
         }
 
         public List<Cart> GetSoldTour(long authorId)
