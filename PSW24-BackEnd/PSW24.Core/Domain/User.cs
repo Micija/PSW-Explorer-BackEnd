@@ -55,6 +55,11 @@ namespace PSW24.Core.Domain
             Interests.Add(userInterest);
         }
 
+        public void IncPoints()
+        {
+            Points++;
+        }
+
     }
 }
 

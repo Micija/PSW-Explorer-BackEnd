@@ -62,5 +62,10 @@ namespace PSW24.Infrastructure.Database.Repositories
         {
             return _dbContext.Carts.FirstOrDefault(c => c.BuyerId == userId && c.TourId == tourId);
         }
+
+        public List<Cart> GetSoldTour(long authorId)
+        {
+            return _dbContext.Carts.Include(c => c.Tour).Where(c => c.Bought && c.Tour.AuthorId == authorId).ToList();
+        }
     }
 }

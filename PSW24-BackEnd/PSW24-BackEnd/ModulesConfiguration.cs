@@ -20,7 +20,7 @@ namespace PSW24_BackEnd
                     .AddJob<ReportService>(jobKey)
                     .AddTrigger(trigger => trigger
                                             .ForJob(jobKey)
-                                            .WithSimpleSchedule(s => s.WithIntervalInSeconds(5).RepeatForever()));
+                                            .WithSimpleSchedule(s => s.WithIntervalInHours(24).RepeatForever()));
             });
 
             services.AddQuartzHostedService(opitions =>

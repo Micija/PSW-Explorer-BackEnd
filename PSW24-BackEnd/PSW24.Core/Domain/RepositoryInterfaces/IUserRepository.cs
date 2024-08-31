@@ -13,5 +13,7 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
         User? GetActiveByName(string username);
         bool Exists(string username);
         User Create(User user);
+        List<User> GetAllAuthor();
+        void Save();
     }
 }

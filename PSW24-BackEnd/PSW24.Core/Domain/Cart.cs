@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PSW24.Core.Domain
-{
+{ 
     public class Cart : Entity
     {
         public long TourId { get; private set; }
@@ -18,7 +18,8 @@ namespace PSW24.Core.Domain
         public Cart(long tourId, long buyerId, bool bought)
         {
             BuyerId = buyerId;
-            TourId = tourId;            Bought = bought;
+            TourId = tourId;
+            Bought = bought;
         }
         public void Buy()
         {

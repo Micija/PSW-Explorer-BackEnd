@@ -34,5 +34,15 @@ namespace PSW24.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return user;
         }
+
+        public List<User> GetAllAuthor()
+        {
+            return _dbContext.Users.Include(u => u.Tours).Where(u => u.Role == UserRole.Author).ToList();
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }
