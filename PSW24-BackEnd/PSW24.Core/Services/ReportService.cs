@@ -5,6 +5,11 @@ using Quartz;
 //---
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
+using FluentResults;
+using PSW24.BuildingBlocks.Core.UseCases;
+using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
 
 
 namespace PSW24.Core.Services
@@ -30,8 +35,62 @@ namespace PSW24.Core.Services
             _logger.LogInformation("{UtcNow}", DateTime.UtcNow);
             FindBestSeller();
             MakeReport();
+            SendEmail();
 
             return Task.CompletedTask;
+        }
+
+        private bool CheckLast3Month(Tour tour, List<Cart> carts)
+        {
+            int currentMonth = DateTime.UtcNow.Month;
+
+            return carts.FirstOrDefault(c => c.TourId == tour.Id && c.Date?.Month == currentMonth) != null || carts.FirstOrDefault(c => c.TourId == tour.Id && c.Date?.Month == (currentMonth - 1)) == null || carts.FirstOrDefault(c => c.TourId == tour.Id && c.Date?.Month == (currentMonth - 2)) == null;
+        }
+
+        private void SendEmail()
+        {
+            string tours = "";
+            foreach (User user in _userRepository.GetAllAuthor())
+            {
+                var carts = _cartRepository.GetSoldTour(user.Id).FindAll(c => DateTime.UtcNow.Month == c.Date?.Month);
+                foreach(Tour tour in user.Tours)
+                {
+                    if (CheckLast3Month(tour, carts)) tours += tour.Name + ",";
+                }
+
+
+                    SmtpClient client = new SmtpClient("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        Credentials = new NetworkCredential("markoandjelicpsw@gmail.com", "yasg svva qiep ddfo"),
+                        EnableSsl = true,
+                    };
+
+                    MailMessage mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("markoandjelicpsw@gmail.com"),
+                        To = { user.Email },
+                        Subject = "Preporuka za brisanje tura",
+                        Body = "Ove ture se nisu prodale poslednja 3 meseca: " + tours,
+                        IsBodyHtml = true
+                    };
+
+                    try
+                    {
+                        client.Send(mailMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Failed to send email: {ex.Message}");
+                    }
+                    finally
+                    {
+                        mailMessage.Dispose();
+                        client.Dispose();
+                    }
+            }
+
+           
         }
 
         private void FindBestSeller()

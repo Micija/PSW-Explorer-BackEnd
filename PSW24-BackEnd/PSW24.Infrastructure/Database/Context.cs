@@ -16,7 +16,7 @@ namespace PSW24.Infrastructure.Database
         public DbSet<Tour> Tours { get; set; }
         public DbSet<KeyPoint> KeyPoints{ get; set; }
         public DbSet<Cart> Carts { get; set; }
-
+        public DbSet<Problem> Problems { get; set; }    
 
         public Context(DbContextOptions<Context> options) : base(options){}
 
@@ -68,6 +68,16 @@ namespace PSW24.Infrastructure.Database
                  .HasOne<User>(k => k.Buyer)
                  .WithMany(u => u.Carts)
                  .HasForeignKey(k => k.BuyerId);
+
+            modelBuilder.Entity<Problem>()
+                 .HasOne<User>(k => k.User)
+                 .WithMany(u => u.Problems)
+                 .HasForeignKey(k => k.UserId);
+
+            modelBuilder.Entity<Problem>()
+                 .HasOne<Tour>(k => k.Tour)
+                 .WithMany()
+                 .HasForeignKey(k => k.TourId);
         }
     }
 }

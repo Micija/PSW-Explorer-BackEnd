@@ -15,6 +15,7 @@ namespace PSW24.Core.Domain
         public  List<UserInterest> Interests { get; private set; }
         public List<Tour> Tours { get; private set; }       //Za koje je autor
         public ICollection<Cart> Carts { get; } = [];
+        public ICollection<Problem> Problems { get; } = []; 
 
         public User(string username, string password, UserRole role, bool isActive, string name, string surname, string email) 
         {
