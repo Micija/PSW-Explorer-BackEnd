@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentResults;
+using PSW24.API.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace PSW24.API.Public
 {
     public interface IReportService
     {
+        Result<List<ReportDto>> GetAllForAuthor(long authorId);
     }
 }

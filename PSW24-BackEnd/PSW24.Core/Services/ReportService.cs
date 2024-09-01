@@ -10,23 +10,30 @@ using PSW24.BuildingBlocks.Core.UseCases;
 using System.Diagnostics;
 using System.Net.Mail;
 using System.Net;
+using PSW24.API.Public;
+using PSW24.API.DTOs;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Security.AccessControl;
 
 
 namespace PSW24.Core.Services
 {
 
-    public class ReportService : IJob
+    public class ReportService : BaseService<ReportDto, Report>, IJob, IReportService
     {
         private readonly IUserRepository _userRepository;
         private readonly ICartRepository _cartRepository;
         private readonly ILogger<ReportService> _logger;
+        private readonly IReportRepository _reportRepository;
     
 
-        public ReportService(ILogger<ReportService> logger, ICartRepository cartRepository, IUserRepository userRepository)
+        public ReportService(ILogger<ReportService> logger, IReportRepository reportRepository , ICartRepository cartRepository, IUserRepository userRepository, IMapper mapper) : base(mapper)
         {
             _logger = logger;
             _cartRepository = cartRepository;
             _userRepository = userRepository;
+            _reportRepository = reportRepository;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -235,5 +242,16 @@ namespace PSW24.Core.Services
             }
         }
 
+        public Result<List<ReportDto>> GetAllForAuthor(long authorId)
+        {
+            try
+            {
+                return MapToDto(_reportRepository.GetAllForAuthor(authorId));
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
     }
 }

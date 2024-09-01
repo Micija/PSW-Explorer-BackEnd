@@ -18,5 +18,14 @@ namespace PSW24_BackEnd.Controllers
             _reportService = reportService;
         }
 
+        [HttpGet("for-author")]
+        public ActionResult<List<ReportDto>> GetAllForAuthor()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _reportService.GetAllForAuthor(loggedUserId);
+            return CreateResponse(result);
+        }
+
+
     }
 }
