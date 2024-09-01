@@ -31,7 +31,7 @@ namespace PSW24.Core.Services
 
         public Task Execute(IJobExecutionContext context)
         {
-            if (DateTime.Now.Day != 1) return Task.CompletedTask;
+            if (DateTime.UtcNow.Day != 1) return Task.CompletedTask;
             _logger.LogInformation("{UtcNow}", DateTime.UtcNow);
             FindBestSeller();
             MakeReport();
@@ -106,9 +106,12 @@ namespace PSW24.Core.Services
                     max = tours;
                 }
             }
-
-            maxUser.IncPoints();
-            _userRepository.Save();
+            if (maxUser != null)
+            {
+                maxUser.IncPoints();
+                _userRepository.Save();
+            }
+            
         }
 
         private double CountEarning(List<Cart> carts)

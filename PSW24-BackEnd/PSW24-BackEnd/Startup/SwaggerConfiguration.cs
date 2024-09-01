@@ -35,8 +35,9 @@ public static class SwaggerConfiguration
             {
                 { jwtSecurityScheme, Array.Empty<string>() }
             });
+            setup.OperationFilter<FileOperation>();
 
-         });
+        });
         return services;
     }
 }
