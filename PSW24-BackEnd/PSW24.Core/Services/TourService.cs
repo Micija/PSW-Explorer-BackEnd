@@ -189,8 +189,7 @@ namespace PSW24.Core.Services
             try
             {
                 List<Tour> suitableTours = new();
-
-                foreach (var tour in _tourRepository.GetAll().ToList().FindAll(t => t.Difficulty.ToString() == difficulty))
+                foreach (var tour in _tourRepository.GetAll().ToList().FindAll(t => t.Difficulty.ToString() == difficulty && t.Status.ToString() == "PUBLISHED"))
                 {
                     if (user.Interests.FirstOrDefault(i => i.InterestId == tour.InterestId) != null) suitableTours.Add(tour);
                 }
