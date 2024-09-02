@@ -13,11 +13,14 @@ namespace PSW24.Core.Domain
         public User User { get; private set; }
         public string Path { get; private set; }
 
-        public Report(long userId, User user, string path)
+        public Report(long userId, string path)
         {
             UserId = userId;
-            User = user;
             Path = path;
+        }
+
+        public Report()
+        {
         }
     }
 }

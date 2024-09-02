@@ -81,9 +81,9 @@ namespace PSW24.Infrastructure.Database
                  .HasForeignKey(k => k.TourId);
 
             modelBuilder.Entity<Report>()
-                 .HasOne<User>(k => k.User)
+                 .HasOne<User>(r => r.User)
                  .WithMany(u => u.Reports)
-                 .HasForeignKey(k => k.UserId);
+                 .HasForeignKey(r => r.UserId);
         }
     }
 }
