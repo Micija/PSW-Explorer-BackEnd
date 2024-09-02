@@ -209,7 +209,7 @@ namespace PSW24.Core.Services
             {
                 List<Tour> suitableTours = new();
 
-                foreach (var tour in _tourRepository.GetAll().ToList())
+                foreach (var tour in _tourRepository.GetAll().ToList().FindAll(t=> t.Status.ToString() == "PUBLISHED"))
                 {
                     if (tour.Author.Points >= 5) suitableTours.Add(tour);
                 }
