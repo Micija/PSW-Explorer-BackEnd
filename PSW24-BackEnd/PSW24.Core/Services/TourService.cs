@@ -20,7 +20,7 @@ namespace PSW24.Core.Services
         protected readonly IUserRepository _userRepository;
         protected readonly ICartRepository _cartRepository;
 
-        public TourService(ITourRepository tourRepository, IInterestRepository interestRepository, IUserRepository userRepository, ICartRepository cartRepository , IMapper mapper) : base(mapper)
+        public TourService(ITourRepository tourRepository, IInterestRepository interestRepository, IUserRepository userRepository, ICartRepository cartRepository, IMapper mapper) : base(mapper)
         {
             _tourRepository = tourRepository;
             _interestRepository = interestRepository;
@@ -35,7 +35,7 @@ namespace PSW24.Core.Services
                 Tour tour = MapToDomain(dto);
                 tour.Draft();
                 tour = _tourRepository.Create(tour);
-               
+
                 return Result.Ok<TourDto>(MapToDto(tour));
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace PSW24.Core.Services
 
         private void SendReccommendation(Tour tour)
         {
-            foreach(User user in _userRepository.GetAllTouristByInterest(tour.InterestId))
+            foreach (User user in _userRepository.GetAllTouristByInterest(tour.InterestId))
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com")
                 {
@@ -190,9 +190,29 @@ namespace PSW24.Core.Services
             {
                 List<Tour> suitableTours = new();
 
-                foreach(var tour in _tourRepository.GetAll().ToList().FindAll(t => t.Difficulty.ToString() == difficulty))
+                foreach (var tour in _tourRepository.GetAll().ToList().FindAll(t => t.Difficulty.ToString() == difficulty))
                 {
                     if (user.Interests.FirstOrDefault(i => i.InterestId == tour.InterestId) != null) suitableTours.Add(tour);
+                }
+
+                return MapToDto(suitableTours);
+
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<TourDto>> GetAwarder()
+        {
+            try
+            {
+                List<Tour> suitableTours = new();
+
+                foreach (var tour in _tourRepository.GetAll().ToList())
+                {
+                    if (tour.Author.Points >= 5) suitableTours.Add(tour);
                 }
 
                 return MapToDto(suitableTours);

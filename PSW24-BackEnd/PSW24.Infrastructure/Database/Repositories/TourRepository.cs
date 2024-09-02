@@ -27,7 +27,7 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public List<Tour> GetAll()
         {
-            return _dbContext.Tours.Include(t => t.KeyPoints).ToList();
+            return _dbContext.Tours.Include(t => t.KeyPoints).Include(t => t.Author).ToList();
         }
 
         

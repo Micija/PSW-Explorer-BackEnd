@@ -98,5 +98,12 @@ namespace PSW24_BackEnd.Controllers
             var tourDto = _tourService.GetRecommendations(loggedUserId, difficulty);
             return CreateResponse(tourDto); 
         }
+
+        [HttpGet("awarded")]
+        public ActionResult<List<TourDto>> GetAwarder()
+        {
+            var tourDto = _tourService.GetAwarder();
+            return CreateResponse(tourDto);
+        }
     }
 }
