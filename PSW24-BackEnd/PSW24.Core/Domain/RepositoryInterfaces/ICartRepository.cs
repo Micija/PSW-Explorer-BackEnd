@@ -16,6 +16,7 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
         void Save();
         Cart GetByTourUser(long userId, long tourId);
         List<Cart> GetSoldTour(long authorId);
+        List<long> GetBoughtTours(User customer);
 
     }
 }

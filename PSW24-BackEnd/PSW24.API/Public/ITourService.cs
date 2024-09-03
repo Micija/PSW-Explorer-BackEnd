@@ -24,5 +24,7 @@ namespace PSW24.API.Public
         Result<List<TourDto>> GetRecommendations(long userId, string difficulty);
 
         Result<List<TourDto>> GetAwarder();
+
+        Result<List<TourDto>> GetBoughtTours(long customerId);
     }
 }
