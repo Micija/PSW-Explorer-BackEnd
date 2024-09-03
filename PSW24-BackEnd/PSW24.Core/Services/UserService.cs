@@ -28,6 +28,30 @@ namespace PSW24.Core.Services
             return MapToDto(user);
         }
 
+        public Result<List<UserDto>> GetSuspicious() { 
+            return MapToDto( UserRepository.GetSuspicious());
+        }
+        public Result<List<UserDto>> GetBlocked()
+        {
+            return MapToDto(UserRepository.GetBlocked());
+        }
 
+        public Result<UserDto> Block(long userId)
+        {
+            User user = UserRepository.GetById(userId);
+            if(user == null) return Result.Fail(FailureCode.NotFound);
+            user.Block();
+            UserRepository.Save();
+            return MapToDto(user);
+        }
+
+        public Result<UserDto> Unblock(long userId)
+        {
+            User user = UserRepository.GetById(userId);
+            if (user == null) return Result.Fail(FailureCode.NotFound);
+            user.Unblock();
+            UserRepository.Save();
+            return MapToDto(user);
+        }
     }
 }

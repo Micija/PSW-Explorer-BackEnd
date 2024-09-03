@@ -49,5 +49,15 @@ namespace PSW24.Infrastructure.Database.Repositories
         {
             return _dbContext.Users.Include(u => u.Interests).Where(u => u.Interests.FirstOrDefault(i => i.InterestId == interestId) == null ? false : true).ToList();
         }
+
+        public List<User> GetSuspicious()
+        {
+            return _dbContext.Users.Where(u => u.Penalty >= 10).ToList();
+        }
+
+        public List<User> GetBlocked()
+        {
+            return _dbContext.Users.Where(u => u.IsBlocked).ToList();
+        }
     }
 }

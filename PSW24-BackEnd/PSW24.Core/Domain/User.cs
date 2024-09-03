@@ -12,13 +12,15 @@ namespace PSW24.Core.Domain
         public string Surname { get; private set; }
         public string Email { get; private set; }
         public long? Points { get; private set; }
-        public  List<UserInterest> Interests { get; private set; }
+        public long? Penalty { get; private set; }
+        public bool IsBlocked { get; private set; }
+        public List<UserInterest> Interests { get; private set; }
         public List<Tour> Tours { get; private set; }       //Za koje je autor
         public ICollection<Cart> Carts { get; } = [];
         public ICollection<Problem> Problems { get; } = []; 
         public ICollection<Report> Reports { get; } = [];
 
-        public User(string username, string password, UserRole role, bool isActive, string name, string surname, string email) 
+        public User(string username, string password, UserRole role, bool isActive, string name, string surname, string email, long? points, long? penalty) 
         {
             Name = name;
             Surname = surname;
@@ -29,6 +31,8 @@ namespace PSW24.Core.Domain
             Username = username;
             Interests = new();
             Tours = new();
+            Points = points;
+            Penalty = penalty;
             Validate();
         }
 
@@ -60,6 +64,20 @@ namespace PSW24.Core.Domain
         public void IncPoints()
         {
             Points++;
+        }
+
+        public void IncPenalty()
+        {
+            Penalty++;
+        }
+
+        public void Block()
+        {
+            IsBlocked = true;
+        }
+        public void Unblock()
+        {
+            IsBlocked = false;
         }
 
     }

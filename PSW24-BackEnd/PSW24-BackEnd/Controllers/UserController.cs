@@ -24,5 +24,33 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
+        [HttpGet("suspicious-users")]
+        public ActionResult<List<UserDto>> GetSuspicious()
+        {
+            var result = _userService.GetSuspicious();
+            return CreateResponse(result);  
+        }
+
+        [HttpPatch("block/{userId}")]
+        public ActionResult<List<UserDto>> Block(long userId)
+        {
+            var result = _userService.Block(userId);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("blocked-users")]
+        public ActionResult<List<UserDto>> GetBlocked()
+        {
+            var result = _userService.GetBlocked();
+            return CreateResponse(result);
+        }
+
+        [HttpPatch("inblock/{userId}")]
+        public ActionResult<List<UserDto>> Unblock(long userId)
+        {
+            var result = _userService.Unblock(userId);
+            return CreateResponse(result);
+        }
+
     }
 }

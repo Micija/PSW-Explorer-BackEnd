@@ -113,6 +113,10 @@ namespace PSW24.Core.Services
                 ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
                 _problemLoggerRepository.Create(problemLogger);
 
+                User user = _userRepository.GetById(problem.UserId);
+                user.IncPenalty();
+                _userRepository.Save();
+
                 problem.Reject();
                 _problemRepository.Save();
 

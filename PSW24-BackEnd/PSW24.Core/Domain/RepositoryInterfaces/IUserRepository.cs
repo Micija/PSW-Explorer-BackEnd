@@ -17,5 +17,7 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
         List<User> GetAllAuthor();
         void Save();
         List<User> GetAllTouristByInterest(long interestId);
+        List<User> GetSuspicious();
+        List<User> GetBlocked();
     }
 }

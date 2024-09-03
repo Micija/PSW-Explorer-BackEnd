@@ -26,7 +26,7 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public Problem GetById(long problemId)
         {
-            return _dbContext.Problems.First(p => p.Id == problemId);
+            return _dbContext.Problems.Include(p => p.User).First(p => p.Id == problemId);
         }
 
         public List<Problem> GetForAuthor(long authorId)
