@@ -209,9 +209,32 @@ namespace PSW24.Core.Services
             {
                 List<Tour> suitableTours = new();
 
-                foreach (var tour in _tourRepository.GetAll().ToList())
+                foreach (var tour in _tourRepository.GetAll().ToList().FindAll(t=> t.Status.ToString() == "PUBLISHED"))
                 {
                     if (tour.Author.Points >= 5) suitableTours.Add(tour);
+                }
+
+                return MapToDto(suitableTours);
+
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<TourDto>> GetBoughtTours(long customerId)
+        {
+            User user = _userRepository.GetById(customerId);
+            if (user == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                List<Tour> suitableTours = new();
+
+                foreach (var tourId in _cartRepository.GetBoughtTours(user))
+                {
+                    
+                    suitableTours.Add(_tourRepository.Get(tourId));
                 }
 
                 return MapToDto(suitableTours);

@@ -105,5 +105,13 @@ namespace PSW24_BackEnd.Controllers
             var tourDto = _tourService.GetAwarder();
             return CreateResponse(tourDto);
         }
+
+        [HttpGet("bought")]
+        public ActionResult<List<TourDto>> GetBoughtTours()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _tourService.GetBoughtTours(loggedUserId);
+            return CreateResponse(result);
+        }
     }
 }
