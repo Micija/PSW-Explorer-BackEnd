@@ -13,9 +13,9 @@ namespace PSW24.Core.Domain
         public long ProblemId { get; set; }
         public Problem Problem { get; set; }    
         public ProblemStatus New {  get; set; } 
-        public ProblemStatus Old { get; set; }
+        public ProblemStatus? Old { get; set; }
 
-        public ProblemLogger(long problemId, ProblemStatus @new, ProblemStatus old)
+        public ProblemLogger(long problemId, ProblemStatus @new, ProblemStatus? old)
         {
             ProblemId = problemId;
             New = @new;

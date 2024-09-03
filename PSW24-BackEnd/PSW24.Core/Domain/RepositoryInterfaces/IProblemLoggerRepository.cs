@@ -8,5 +8,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
 {
     public interface IProblemLoggerRepository
     {
+        ProblemLogger Create(ProblemLogger problemLogger);
     }
 }

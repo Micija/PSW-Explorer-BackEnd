@@ -24,5 +24,56 @@ namespace PSW24_BackEnd.Controllers
             var result = _problemService.Create(dto);
             return CreateResponse(result);
         }
+
+        [HttpGet("for-author")]
+        public ActionResult<List<ProblemDto>> GetForAuthor()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _problemService.GetForAuthor(loggedUserId);
+            return CreateResponse(result);
+        }
+
+        [HttpPatch("solve/{problemId}")]
+        public ActionResult<ProblemDto> Solve(long problemId) {
+            var result = _problemService.Solve(problemId);
+            return CreateResponse(result);
+        }
+
+        [HttpPatch("revision/{problemId}")]
+        public ActionResult<ProblemDto> Revision(long problemId)
+        {
+            var result = _problemService.Revision(problemId);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("all-admin-revision")]
+        public ActionResult<List<ProblemDto>> GetRevisionForAdmin()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _problemService.GetForAuthor(loggedUserId);
+            return CreateResponse(result);
+        }
+
+        [HttpPatch("on-hold/{tourId}")]
+        public ActionResult<ProblemDto> OnHold(long problemId)
+        {
+            var result = _problemService.OnHold(problemId);
+            return CreateResponse(result);
+        }
+
+        [HttpPatch("reject/{tourId}")]
+        public ActionResult<ProblemDto> Reject(long problemId)
+        {
+            var result = _problemService.Reject(problemId);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("for-tourist")]
+        public ActionResult<List<ProblemDto>> GetForTourist()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _problemService.GetForTourist(loggedUserId);
+            return CreateResponse(result);
+        }
     }
 }

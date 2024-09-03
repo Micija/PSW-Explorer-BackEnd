@@ -17,6 +17,7 @@ namespace PSW24.Core.Domain
         public ProblemStatus Status { get; private set; }
         public long UserId {  get; private set; }
         public User User { get; private set; }
+        public ICollection<ProblemLogger> Loggers { get; } = [];
 
         public Problem(long tourId, string name, string description, ProblemStatus status, long userId)
         {
@@ -25,6 +26,26 @@ namespace PSW24.Core.Domain
             Description = description;
             Status = status;
             UserId = userId;
+        }
+
+        public void Solve()
+        {
+            Status = ProblemStatus.SOLVED;
+        }
+    
+        public void Revision()
+        {
+            Status = ProblemStatus.ON_REVISION;
+        }
+
+        public void OnHold()
+        {
+            Status = ProblemStatus.ON_HOLD;
+        }
+
+        public void Reject()
+        {
+            Status = ProblemStatus.REJECT;
         }
     }
 }

@@ -19,13 +19,15 @@ namespace PSW24.Core.Services
         protected readonly IInterestRepository _interestRepository;
         protected readonly IUserRepository _userRepository;
         protected readonly ICartRepository _cartRepository;
+        protected readonly IProblemLoggerRepository _problemLoggerRepository;
 
-        public ProblemService(IProblemRepository problemRepository, IInterestRepository interestRepository, IUserRepository userRepository, ICartRepository cartRepository, IMapper mapper) : base(mapper)
+        public ProblemService(IProblemRepository problemRepository, IInterestRepository interestRepository, IProblemLoggerRepository problemLoggerRepository , IUserRepository userRepository, ICartRepository cartRepository, IMapper mapper) : base(mapper)
         {
             _problemRepository = problemRepository;
             _interestRepository = interestRepository;
             _userRepository = userRepository;
             _cartRepository = cartRepository;
+            _problemLoggerRepository = problemLoggerRepository;
         }
 
         public Result<ProblemDto> Create(ProblemDto dto)
@@ -35,6 +37,9 @@ namespace PSW24.Core.Services
                 Problem problem = MapToDomain(dto);
                 problem = _problemRepository.Create(problem);
 
+                ProblemLogger problemLogger = new(dto.Id, problem.Status, null);
+                _problemLoggerRepository.Create(problemLogger);
+
                 return Result.Ok<ProblemDto>(MapToDto(problem));
             }
             catch (Exception ex)
@@ -43,5 +48,120 @@ namespace PSW24.Core.Services
             }
         }
 
+        public Result<List<ProblemDto>> GetForAuthor(long authorId)
+        {
+            try
+            {
+                return MapToDto(_problemRepository.GetForAuthor(authorId));
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<ProblemDto>> GetForTourist(long touristId)
+        {
+            try
+            {
+                return MapToDto(_problemRepository.GetForTourist(touristId));
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<ProblemDto>> GetRevisionForAdmin(long authorId)
+        {
+            try
+            {
+                return MapToDto(_problemRepository.GetRevisionForAdmin(authorId));
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<ProblemDto> OnHold(long problemId)
+        {
+            Problem problem = _problemRepository.GetById(problemId);
+            if (problem == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                _problemLoggerRepository.Create(problemLogger);
+
+                problem.OnHold();
+                _problemRepository.Save();
+
+                return MapToDto(problem);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<ProblemDto> Reject(long problemId)
+        {
+            Problem problem = _problemRepository.GetById(problemId);
+            if (problem == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                _problemLoggerRepository.Create(problemLogger);
+
+                problem.Reject();
+                _problemRepository.Save();
+
+                return MapToDto(problem);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<ProblemDto> Revision(long problemId)
+        {
+            Problem problem = _problemRepository.GetById(problemId);
+            if (problem == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                _problemLoggerRepository.Create(problemLogger);
+
+                problem.Revision();
+                _problemRepository.Save();
+
+                return MapToDto(problem);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<ProblemDto> Solve(long problemId)
+        {
+            Problem problem = _problemRepository.GetById(problemId);
+            if (problem == null) return Result.Fail(FailureCode.NotFound);
+            try
+            {
+                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                _problemLoggerRepository.Create(problemLogger);
+
+                problem.Solve();
+                _problemRepository.Save();
+
+                return MapToDto(problem);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace PSW24.Infrastructure.Database
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Problem> Problems { get; set; }
         public DbSet<Report> Reports { get; set; }
-
+        public DbSet<ProblemLogger> ProblemLoggers { get; set; }
         public Context(DbContextOptions<Context> options) : base(options){}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -84,6 +84,11 @@ namespace PSW24.Infrastructure.Database
                  .HasOne<User>(r => r.User)
                  .WithMany(u => u.Reports)
                  .HasForeignKey(r => r.UserId);
+
+            modelBuilder.Entity<ProblemLogger>()
+                .HasOne<Problem>(r => r.Problem)
+                .WithMany(u => u.Loggers)
+                .HasForeignKey(r => r.ProblemId);
         }
     }
 }
