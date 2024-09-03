@@ -165,7 +165,6 @@ namespace PSW24.Core.Services
         {
             foreach (User user in _userRepository.GetAllAuthor())
             {
-
                 var tours = _cartRepository.GetSoldTour(user.Id).FindAll(c => DateTime.UtcNow.Month == c.Date?.Month);
                 int soldNumber = tours.Count();
                 double earned = CountEarning(tours);
@@ -183,6 +182,9 @@ namespace PSW24.Core.Services
                     // Definišemo putanju i proveravamo da li direktorijum postoji
 
                     string filePath = $"..\\\\PSW24-BackEnd\\\\Resources\\\\Pdfs\\\\MonthlyReport_{user.Username}_{DateTime.UtcNow:yyyyMMdd}.pdf";
+
+                    Report report = new(user.Id, filePath);
+                    _reportRepository.Create(report);
 
                     using (var document = new PdfDocument())
                     {

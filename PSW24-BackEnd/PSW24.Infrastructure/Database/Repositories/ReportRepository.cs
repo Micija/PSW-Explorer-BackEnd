@@ -16,6 +16,12 @@ namespace PSW24.Infrastructure.Database.Repositories
             _dbContext = dbContext;
         }
 
+        public void Create(Report report)
+        {
+            _dbContext.Reports.Add(report);
+            _dbContext.SaveChanges();
+        }
+
         public List<Report> GetAllForAuthor(long authorId)
         {
             return _dbContext.Reports.Where(r => r.UserId == authorId).ToList();  

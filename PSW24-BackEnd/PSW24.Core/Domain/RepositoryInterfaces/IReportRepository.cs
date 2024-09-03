@@ -9,5 +9,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     public interface IReportRepository 
     {
         List<Report> GetAllForAuthor(long authorId);
+        void Create(Report report);
     }
 }
