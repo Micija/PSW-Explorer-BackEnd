@@ -32,7 +32,7 @@ namespace PSW24.Core.Services
         public Result<AuthenticationTokensDto> Login(LoginDto credentials)
         {
             var user = _userRepository.GetActiveByName(credentials.Username);
-            if (user == null || credentials.Password != user.Password) return Result.Fail(FailureCode.NotFound);
+            if (user == null || credentials.Password != user.Password || user.IsBlocked) return Result.Fail(FailureCode.NotFound);
 
             return _tokenGenerator.GenerateAccessToken(user);
         }

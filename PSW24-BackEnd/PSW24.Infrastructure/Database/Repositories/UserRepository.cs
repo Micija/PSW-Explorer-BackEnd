@@ -52,7 +52,7 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public List<User> GetSuspicious()
         {
-            return _dbContext.Users.Where(u => u.Penalty >= 10).ToList();
+            return _dbContext.Users.Where(u => u.Penalty >= 10 && u.IsBlocked == false).ToList();
         }
 
         public List<User> GetBlocked()
