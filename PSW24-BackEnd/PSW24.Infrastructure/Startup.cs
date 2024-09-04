@@ -51,6 +51,7 @@ namespace PSW24.Infrastructure
             services.AddScoped(typeof(ICrudRepository<Cart>), typeof(CrudDatabaseRepository<Cart, Context>));
             services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, Context>));
             services.AddScoped(typeof(ICrudRepository<Report>), typeof(CrudDatabaseRepository<Report, Context>));
+            services.AddScoped(typeof(ICrudRepository<ProblemLogger>), typeof(CrudDatabaseRepository<ProblemLogger, Context>));
 
 
 
@@ -62,6 +63,7 @@ namespace PSW24.Infrastructure
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IProblemRepository, ProblemRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IProblemLoggerRepository, ProblemLoggerRepository>();
 
 
             services.AddDbContext<Context>(opt =>
