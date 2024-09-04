@@ -12,6 +12,7 @@ namespace PSW24.API.Public
     {
         Result<ProblemDto> Create(ProblemDto dto);
         Result<List<ProblemDto>> GetForAuthor(long authorId);
+        Result<List<ProblemDto>> GetNewForAuthor(long authorId);
         Result<ProblemDto> Solve(long problemId);
         Result<ProblemDto> Revision(long problemId);
         Result<List<ProblemDto>> GetRevisionForAdmin(long authorId);

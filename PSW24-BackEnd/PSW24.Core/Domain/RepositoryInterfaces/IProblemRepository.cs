@@ -10,6 +10,7 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     {
         Problem Create(Problem problem);
         List<Problem> GetForAuthor(long authorId);
+        List<Problem> GetNewForAuthor(long authorId);
         Problem GetById(long problemId);
         void Save();
         List<Problem> GetRevisionForAdmin(long authorId);
