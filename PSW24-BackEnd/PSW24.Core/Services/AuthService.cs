@@ -43,7 +43,7 @@ namespace PSW24.Core.Services
 
             try
             {
-                var user = _userRepository.Create(new User(account.Username, account.Password, (UserRole)account.Role, true, account.Name, account.Surname, account.Email));
+                var user = _userRepository.Create(new User(account.Username, account.Password, (UserRole)account.Role, true, account.Name, account.Surname, account.Email, 0, 0));
 
                 foreach(var i in account.Interests)
                 {

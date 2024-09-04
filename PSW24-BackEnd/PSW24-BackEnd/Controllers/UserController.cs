@@ -45,7 +45,7 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPatch("inblock/{userId}")]
+        [HttpPatch("unblock/{userId}")]
         public ActionResult<List<UserDto>> Unblock(long userId)
         {
             var result = _userService.Unblock(userId);
