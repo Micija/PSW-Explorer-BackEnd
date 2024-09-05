@@ -32,6 +32,13 @@ namespace PSW24_BackEnd.Controllers
             var result = _problemService.GetForAuthor(loggedUserId);
             return CreateResponse(result);
         }
+        [HttpGet("new-for-author")]
+        public ActionResult<List<ProblemDto>> GetNewForAuthor()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _problemService.GetNewForAuthor(loggedUserId);
+            return CreateResponse(result);
+        }
 
         [HttpPatch("solve/{problemId}")]
         public ActionResult<ProblemDto> Solve(long problemId) {
@@ -50,18 +57,18 @@ namespace PSW24_BackEnd.Controllers
         public ActionResult<List<ProblemDto>> GetRevisionForAdmin()
         {
             var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
-            var result = _problemService.GetForAuthor(loggedUserId);
+            var result = _problemService.GetRevisionForAdmin(loggedUserId);
             return CreateResponse(result);
         }
 
-        [HttpPatch("on-hold/{tourId}")]
+        [HttpPatch("on-hold/{problemId}")]
         public ActionResult<ProblemDto> OnHold(long problemId)
         {
             var result = _problemService.OnHold(problemId);
             return CreateResponse(result);
         }
 
-        [HttpPatch("reject/{tourId}")]
+        [HttpPatch("reject/{problemId}")]
         public ActionResult<ProblemDto> Reject(long problemId)
         {
             var result = _problemService.Reject(problemId);

@@ -37,7 +37,7 @@ namespace PSW24.Core.Services
                 Problem problem = MapToDomain(dto);
                 problem = _problemRepository.Create(problem);
 
-                ProblemLogger problemLogger = new(dto.Id, problem.Status, null);
+                ProblemLogger problemLogger = new(problem.Id, problem.Status, null);
                 _problemLoggerRepository.Create(problemLogger);
 
                 return Result.Ok<ProblemDto>(MapToDto(problem));
@@ -53,6 +53,18 @@ namespace PSW24.Core.Services
             try
             {
                 return MapToDto(_problemRepository.GetForAuthor(authorId));
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(ex.Message);
+            }
+        }
+
+        public Result<List<ProblemDto>> GetNewForAuthor(long authorId)
+        {
+            try
+            {
+                return MapToDto(_problemRepository.GetNewForAuthor(authorId));
             }
             catch (Exception ex)
             {
@@ -90,7 +102,7 @@ namespace PSW24.Core.Services
             if (problem == null) return Result.Fail(FailureCode.NotFound);
             try
             {
-                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                ProblemLogger problemLogger = new(problem.Id,  Domain.Enums.ProblemStatus.ON_HOLD, problem.Status);
                 _problemLoggerRepository.Create(problemLogger);
 
                 problem.OnHold();
@@ -110,7 +122,7 @@ namespace PSW24.Core.Services
             if (problem == null) return Result.Fail(FailureCode.NotFound);
             try
             {
-                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                ProblemLogger problemLogger = new(problem.Id, Domain.Enums.ProblemStatus.REJECT, problem.Status);
                 _problemLoggerRepository.Create(problemLogger);
 
                 User user = _userRepository.GetById(problem.UserId);
@@ -134,7 +146,7 @@ namespace PSW24.Core.Services
             if (problem == null) return Result.Fail(FailureCode.NotFound);
             try
             {
-                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                ProblemLogger problemLogger = new(problem.Id,  Domain.Enums.ProblemStatus.ON_REVISION, problem.Status);
                 _problemLoggerRepository.Create(problemLogger);
 
                 problem.Revision();
@@ -154,7 +166,7 @@ namespace PSW24.Core.Services
             if (problem == null) return Result.Fail(FailureCode.NotFound);
             try
             {
-                ProblemLogger problemLogger = new(problem.Id, problem.Status, Domain.Enums.ProblemStatus.SOLVED);
+                ProblemLogger problemLogger = new(problem.Id,  Domain.Enums.ProblemStatus.SOLVED, problem.Status);
                 _problemLoggerRepository.Create(problemLogger);
 
                 problem.Solve();

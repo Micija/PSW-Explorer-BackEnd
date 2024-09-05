@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PSW24.Core.Domain;
+using PSW24.Core.Domain.Enums;
 using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,17 @@ namespace PSW24.Infrastructure.Database.Repositories
             return _dbContext.Problems.Include(p => p.Tour).Where(p => p.Tour.AuthorId == authorId).ToList();
         }
 
+        public List<Problem> GetNewForAuthor(long authorId)
+        {
+            var ret = _dbContext.Problems
+                .Include(p => p.Tour)
+                .Where(p => p.Tour.AuthorId == authorId && p.Status == ProblemStatus.ON_HOLD)
+                .ToList();
+
+            return ret;
+
+        }
+
         public List<Problem> GetForTourist(long touristId)
         {
             return _dbContext.Problems.Include(p => p.Tour).Where(p => p.UserId == touristId).ToList();
@@ -41,7 +53,7 @@ namespace PSW24.Infrastructure.Database.Repositories
 
         public List<Problem> GetRevisionForAdmin(long authorId)
         {
-            return _dbContext.Problems.Include(p => p.Tour).Where(p => p.Tour.AuthorId == authorId && p.Status == Core.Domain.Enums.ProblemStatus.ON_REVISION).ToList();
+            return _dbContext.Problems.Include(p => p.Tour).Where(p => p.Status == ProblemStatus.ON_REVISION).ToList();
         }
 
         public void Save()
