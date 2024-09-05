@@ -52,5 +52,13 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
+        [HttpPatch("change-interest")]
+        public ActionResult<UserDto> ChangeInterest([FromBody] List<String> interests)
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _userService.ChangeInterest(loggedUserId, interests);
+            return CreateResponse(result);
+        }
+
     }
 }

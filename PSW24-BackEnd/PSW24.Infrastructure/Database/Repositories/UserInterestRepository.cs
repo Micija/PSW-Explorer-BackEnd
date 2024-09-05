@@ -1,4 +1,5 @@
-﻿using PSW24.Core.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using PSW24.Core.Domain;
 using PSW24.Core.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ namespace PSW24.Infrastructure.Database.Repositories
             _dbContext.Add<UserInterest>(userInterest);
             _dbContext.SaveChanges();
             return userInterest;
+        }
+
+        public void Delete(long userId, long interestId)
+        {
+            UserInterest userInterest = _dbContext.UserInterests.FirstOrDefault(u => u.UserId == userId && u.InterestId == interestId);
+            _dbContext.UserInterests.Remove(userInterest);
         }
     }
 }

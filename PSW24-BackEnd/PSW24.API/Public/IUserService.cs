@@ -15,5 +15,6 @@ namespace PSW24.API.Public
         Result<List<UserDto>> GetBlocked();
         Result<UserDto> Block(long userId);
         Result<UserDto> Unblock(long userId);
+        Result<UserDto> ChangeInterest(long userId, List<string> interests);
     }
 }

@@ -10,5 +10,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     public interface IUserInterestRepository
     {
         UserInterest Create(UserInterest userInterest);
+        void Delete(long userId, long interestId);
     }
 }

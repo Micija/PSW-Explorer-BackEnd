@@ -16,41 +16,61 @@ namespace PSW24.Core.Services
 {
     public class UserService : CrudService<UserDto, User>, IUserService
     {
-        private readonly IUserRepository UserRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IUserInterestRepository _userInterestRepository;
+        private readonly IInterestRepository _interestRepository;
 
-        public UserService(ICrudRepository<User> crudRepository, IMapper mapper, IUserRepository userRepository) : base(crudRepository,mapper)
+        public UserService(ICrudRepository<User> crudRepository, IMapper mapper, IUserRepository userRepository, IUserInterestRepository userInterestRepository, IInterestRepository interestRepository) : base(crudRepository, mapper)
         {
-            UserRepository = userRepository;
+            _userRepository = userRepository;
+            _userInterestRepository = userInterestRepository;
+            _interestRepository = interestRepository;   
         }
         public Result<UserDto> GetById(long userId)
         {
-            User user = UserRepository.GetById(userId);
+            User user = _userRepository.GetById(userId);
             return MapToDto(user);
         }
 
         public Result<List<UserDto>> GetSuspicious() { 
-            return MapToDto( UserRepository.GetSuspicious());
+            return MapToDto(_userRepository.GetSuspicious());
         }
         public Result<List<UserDto>> GetBlocked()
         {
-            return MapToDto(UserRepository.GetBlocked());
+            return MapToDto(_userRepository.GetBlocked());
         }
 
         public Result<UserDto> Block(long userId)
         {
-            User user = UserRepository.GetById(userId);
+            User user = _userRepository.GetById(userId);
             if(user == null) return Result.Fail(FailureCode.NotFound);
             user.Block();
-            UserRepository.Save();
+            _userRepository.Save();
             return MapToDto(user);
         }
 
         public Result<UserDto> Unblock(long userId)
-        {
-            User user = UserRepository.GetById(userId);
+        { 
+            User user = _userRepository.GetById(userId);
             if (user == null) return Result.Fail(FailureCode.NotFound);
             user.Unblock();
-            UserRepository.Save();
+            _userRepository.Save();
+            return MapToDto(user);
+        }
+
+        public Result<UserDto> ChangeInterest(long userId, List<string> interests)
+        {
+            User user = _userRepository.GetById(userId);
+            foreach(UserInterest ui in user.Interests)
+            {
+                _userInterestRepository.Delete(user.Id, ui.Id);
+            }
+            if (user == null) return Result.Fail(FailureCode.NotFound);
+            foreach(string interest in interests) { 
+                Interest interest1 = _interestRepository.GetByType(interest);
+                UserInterest userInterest = new(user.Id, interest1.Id);
+                _userInterestRepository.Create(userInterest);
+            }
             return MapToDto(user);
         }
     }
