@@ -12,5 +12,6 @@ namespace PSW24.API.Public
     public interface IInterestService 
     {
         Result<List<InterestDto>> GetAll();
+        Result<List<InterestDto>> GetForUser(long userId);
     }
 }

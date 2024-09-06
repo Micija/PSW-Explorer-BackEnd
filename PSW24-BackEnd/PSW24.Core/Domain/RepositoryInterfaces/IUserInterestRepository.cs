@@ -11,5 +11,6 @@ namespace PSW24.Core.Domain.RepositoryInterfaces
     {
         UserInterest Create(UserInterest userInterest);
         void Delete(long userId, long interestId);
+        List<UserInterest> GetForUser(long userId);
     }
 }

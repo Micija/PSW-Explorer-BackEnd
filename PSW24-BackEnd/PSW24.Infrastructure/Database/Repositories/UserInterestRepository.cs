@@ -29,5 +29,10 @@ namespace PSW24.Infrastructure.Database.Repositories
             UserInterest userInterest = _dbContext.UserInterests.FirstOrDefault(u => u.UserId == userId && u.InterestId == interestId);
             _dbContext.UserInterests.Remove(userInterest);
         }
+
+        public List<UserInterest> GetForUser(long userId)
+        {
+            return _dbContext.UserInterests.Where(u => u.UserId == userId).ToList();
+        }
     }
 }

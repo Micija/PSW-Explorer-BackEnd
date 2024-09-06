@@ -23,5 +23,13 @@ namespace PSW24_BackEnd.Controllers
             return CreateResponse(result);
         }
 
+        [HttpGet("for-user")]
+        public ActionResult<List<InterestDto>> GetForUser()
+        {
+            var loggedUserId = long.Parse(User.FindFirst("id")?.Value);
+            var result = _interestService.GetForUser(loggedUserId);
+            return CreateResponse(result);
+        }
+
     }
 }
