@@ -27,6 +27,7 @@ namespace PSW24.Infrastructure.Database.Repositories
         public void Delete(long userId, long interestId)
         {
             UserInterest userInterest = _dbContext.UserInterests.FirstOrDefault(u => u.UserId == userId && u.InterestId == interestId);
+            if (userInterest == null) return;
             _dbContext.UserInterests.Remove(userInterest);
         }
 
