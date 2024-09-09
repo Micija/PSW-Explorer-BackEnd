@@ -63,7 +63,7 @@ namespace PSW24.Core.Services
             User user = _userRepository.GetById(userId);
             foreach(UserInterest ui in user.Interests)
             {
-                _userInterestRepository.Delete(user.Id, ui.Id);
+                _userInterestRepository.Delete(user.Id, ui.InterestId);
             }
             if (user == null) return Result.Fail(FailureCode.NotFound);
             foreach(string interest in interests) { 

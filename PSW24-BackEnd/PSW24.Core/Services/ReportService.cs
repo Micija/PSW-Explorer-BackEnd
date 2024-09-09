@@ -38,7 +38,7 @@ namespace PSW24.Core.Services
 
         public Task Execute(IJobExecutionContext context)
         {
-            if (DateTime.UtcNow.Day != 1) return Task.CompletedTask;
+            //if (DateTime.UtcNow.Day != 12) return Task.CompletedTask;
             _logger.LogInformation("{UtcNow}", DateTime.UtcNow);
             FindBestSeller();
             MakeReport();
@@ -182,8 +182,11 @@ namespace PSW24.Core.Services
                     // Definišemo putanju i proveravamo da li direktorijum postoji
 
                     string filePath = $"..\\\\PSW24-BackEnd\\\\Resources\\\\Pdfs\\\\MonthlyReport_{user.Username}_{DateTime.UtcNow:yyyyMMdd}.pdf";
+                    string filePath1 = $"/Pdfs/MonthlyReport_{user.Username}_{DateTime.UtcNow:yyyyMMdd}.pdf";
 
-                    Report report = new(user.Id, filePath);
+
+
+                    Report report = new(user.Id, filePath1);
                     _reportRepository.Create(report);
 
                     using (var document = new PdfDocument())

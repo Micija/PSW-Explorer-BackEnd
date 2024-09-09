@@ -104,6 +104,10 @@ namespace PSW24.Core.Services
             {
                 ProblemLogger problemLogger = new(problem.Id,  Domain.Enums.ProblemStatus.ON_HOLD, problem.Status);
                 _problemLoggerRepository.Create(problemLogger);
+                User author = _userRepository.GetById(problem.Tour.AuthorId);
+                author.IncPenalty();
+                _userRepository.Save();
+
 
                 problem.OnHold();
                 _problemRepository.Save();
